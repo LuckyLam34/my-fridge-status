@@ -1,0 +1,13 @@
+@import './colors';
+
+.fridge-item {
+  .item-container {
+    display: inline;
+    img {
+      width: 100px;
+    }
+    .card-title {
+      float: right;
+    }
+  }
+}

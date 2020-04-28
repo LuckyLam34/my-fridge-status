@@ -9,10 +9,10 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import './style/style.scss';
 import * as firebase from 'firebase';
 import { firebaseConfig } from './env/firebase-config';
+import FirebaseService from './services/firebase.service';
 
 firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
-database.ref('/fridge-items').once('value').then(data => console.log(data.val()));
+FirebaseService.database = firebase.database();
 
 ReactDOM.render(
   <Provider store={store}>
