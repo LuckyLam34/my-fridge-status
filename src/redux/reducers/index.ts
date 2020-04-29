@@ -1,4 +1,4 @@
-import { SHOW_ITEMS } from "../../constants/action-constants";
+import { SHOW_ITEMS } from "../../constants/action-types";
 
 const reducers = (state = {}, action: any) => {
     switch (action.type) {

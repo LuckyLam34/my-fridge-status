@@ -1,13 +1,18 @@
 @import './colors';
 
 .fridge-item {
-  .item-container {
-    display: inline;
-    img {
-      width: 100px;
-    }
-    .card-title {
-      float: right;
+  img {
+    width: 50px;
+  }
+
+  table {
+    background: $yellow;
+    color: $whiteText;
+    border-radius: 7px;
+
+    td, th {
+      vertical-align: middle;
+      text-align: left;
     }
   }
 }

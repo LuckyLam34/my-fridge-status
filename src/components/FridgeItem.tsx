@@ -9,17 +9,42 @@ export class FridgeItem extends React.Component {
 
   render() {
     return (
-      <Card className="fridge-item">
-        <div className="d-flex flex-row bd-highlight item-container">
-          <div className="p-2 bd-highlight">
-            <img src='/assets/images/cabbage.jpg' />
-          </div>
-          <div className="p-2 bd-highlight">
-            <Card.Title>Cabbage</Card.Title>
-          </div>
-          <div className="p-2 bd-highlight">Flex item 3333333</div>
-        </div>
-      </Card>
+      <div className="fridge-item">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col">Added Date</th>
+              <th scope="col">Expired Date</th>
+            </tr>
+          </thead>
+          <tbody className="text-center">
+            <tr>
+              <th scope="row">1</th>
+              <td> <img className="rounded" src='/assets/images/cabbage.jpg' /></td>
+              <td>Cabbage</td>
+              <td>@mdo</td>
+              <td>@mdo</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     )
   }
 }

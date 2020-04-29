@@ -1,12 +1,15 @@
 import React from 'react';
 import FirebaseService from './services/firebase.service';
 import { FridgeItems } from './containers/FridgeItems';
+import { State } from './constants/interfaces';
+import { connect } from 'react-redux';
 
 class App extends React.Component {
   database: any;
 
   constructor(props: any) {
     super(props);
+    console.log(this.props)
   }
 
   componentDidMount() {
@@ -15,18 +18,31 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <div className="jumbotron jumbotron-fluid">
-          <div className="container">
-            <h1 className="display-4 ">My Fridge Status <i className="fas fa-door-open"></i></h1>
-          </div>
+      <div className="app">
+        <div className="loader">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <div className="container">
-          <FridgeItems></FridgeItems>
+        <div className="loading">
+          <div className="jumbotron jumbotron-fluid">
+            <div className="container">
+              <h1 className="display-4 ">My Fridge Status <i className="fas fa-door-open"></i></h1>
+            </div>
+          </div>
+          <div className="container">
+            <FridgeItems></FridgeItems>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state: State) => {
+  const { loadingFlag } = state;
+
+  return loadingFlag;
+}
+
+export default connect(mapStateToProps)(App);
