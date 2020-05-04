@@ -5,7 +5,7 @@ export interface IFridgeItem {
   name: string,
 }
 
-export interface State {
+export interface IState {
   loadingFlag: boolean,
   fridgeItems: IFridgeItem[]
 }

@@ -1,9 +1,10 @@
 import React from 'react';
 import FirebaseService from './services/firebase.service';
 import { FridgeItems } from './containers/FridgeItems';
-import { State } from './constants/interfaces';
+import { IState } from './constants/interfaces';
 import { connect } from 'react-redux';
 import { loading, fetchFridgeItems } from './redux/actions';
+import { AddFridgeItemButton } from './containers/AddFridgeItemButton';
 
 interface IEx {
   loadingFlag: boolean,
@@ -15,7 +16,6 @@ class App extends React.Component<IEx, any> {
 
   constructor(props: any) {
     super(props);
-    console.log(this.props)
   }
 
   componentDidMount() {
@@ -38,6 +38,7 @@ class App extends React.Component<IEx, any> {
           </div>
           <div className="container">
             <FridgeItems {...this.props}></FridgeItems>
+            <AddFridgeItemButton></AddFridgeItemButton>
           </div>
         </div>
       </div>
@@ -45,7 +46,7 @@ class App extends React.Component<IEx, any> {
   }
 }
 
-const mapStateToProps = (state: State) => {
+const mapStateToProps = (state: IState) => {
   const { loadingFlag, fridgeItems } = state;
 
   return { loadingFlag, fridgeItems };

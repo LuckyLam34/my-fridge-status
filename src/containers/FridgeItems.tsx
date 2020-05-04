@@ -2,11 +2,11 @@ import React from 'react';
 import { FridgeItem } from './../components/FridgeItem';
 import { IFridgeItem } from '../constants/interfaces';
 
-export const FridgeItems = (prop: any) => {
+export const FridgeItems = ({ fridgeItems }: any) => {
   let items: any[] = [];
 
-  if (prop.fridgeItems) {
-    items = Object.values(prop.fridgeItems);
+  if (fridgeItems) {
+    items = Object.values(fridgeItems);
     console.log(items)
   }
   return items.length > 0 ? <div className="fridge-item">
