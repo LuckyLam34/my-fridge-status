@@ -3,8 +3,14 @@ import FirebaseService from './services/firebase.service';
 import { FridgeItems } from './containers/FridgeItems';
 import { State } from './constants/interfaces';
 import { connect } from 'react-redux';
+import { loading, fetchFridgeItems } from './redux/actions';
 
-class App extends React.Component {
+interface IEx {
+  loadingFlag: boolean,
+  fetchFridgeItems: any,
+  fridgeItems: any
+}
+class App extends React.Component<IEx, any> {
   database: any;
 
   constructor(props: any) {
@@ -13,25 +19,25 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    FirebaseService.getFridgeItems().then((data: any) => console.log(data.val()))
+    this.props.fetchFridgeItems();
   }
 
   render() {
     return (
       <div className="app">
-        <div className="loader">
+        {this.props.loadingFlag ? <div className="loader">
           <span></span>
           <span></span>
           <span></span>
-        </div>
-        <div className="loading">
+        </div> : null}
+        <div className={this.props.loadingFlag ? 'loading' : ''}>
           <div className="jumbotron jumbotron-fluid">
             <div className="container">
               <h1 className="display-4 ">My Fridge Status <i className="fas fa-door-open"></i></h1>
             </div>
           </div>
           <div className="container">
-            <FridgeItems></FridgeItems>
+            <FridgeItems {...this.props}></FridgeItems>
           </div>
         </div>
       </div>
@@ -40,9 +46,14 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state: State) => {
-  const { loadingFlag } = state;
+  const { loadingFlag, fridgeItems } = state;
 
-  return loadingFlag;
+  return { loadingFlag, fridgeItems };
 }
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch: any) => ({
+  setLoading: () => dispatch(loading(false)),
+  fetchFridgeItems: () => dispatch(fetchFridgeItems())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

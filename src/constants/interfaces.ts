@@ -1,4 +1,4 @@
-export interface FridgeItem {
+export interface IFridgeItem {
   id: string
   dateAdded: string,
   dateExpired: string,
@@ -7,5 +7,5 @@ export interface FridgeItem {
 
 export interface State {
   loadingFlag: boolean,
-  fridgeItems: FridgeItem[]
+  fridgeItems: IFridgeItem[]
 }
