@@ -18,18 +18,18 @@ export class AddFridgeItemButton extends React.Component<any, any> {
   handleClose() {
     this.setState({
       show: !this.state.show
-    })
+    });
   }
 
   render() {
     return (
-      <div className="add-fridge-item-button">
+      <div>
         <div className="add-fridge-item-button">
           <button onClick={this.handleClose} type="button" className="btn btn-primary">
             <i className="fas fa-plus"></i>&nbsp;
             Add Item</button>
         </div>
-        <Modal centered={true} show={this.state.show} onHide={this.handleClose} backdrop="static">
+        <Modal className="add-fridge-item-button" centered={true} show={this.state.show} onHide={this.handleClose} backdrop="static">
           <Modal.Header closeButton>
             <Modal.Title>Add New Item</Modal.Title>
           </Modal.Header>
@@ -45,11 +45,15 @@ export class AddFridgeItemButton extends React.Component<any, any> {
                 </select>
               </div>
               <div className="d-flex">
-                <div className="form-group">
-                  <label>Add new vegetable</label>
-                  <input type="text" className="form-control" aria-describedby="emailHelp" placeholder="" />
+                <div className="w-75">
+                  <div className="form-group">
+                    <label>Add new vegetable</label>
+                    <input type="text" className="form-control" aria-describedby="emailHelp" placeholder="" />
+                  </div>
                 </div>
-                <button type="button" className="btn btn-primary mb-2"> <i className="fas fa-plus"></i>&nbsp;Add</button>
+                <div className="w-25 pr-0">
+                  <button type="button" className="btn btn-primary mb-2"> <i className="fas fa-plus"></i>&nbsp;Add</button>
+                </div>
               </div>
             </form>
           </Modal.Body>
