@@ -4,10 +4,10 @@ import { FridgeItems } from './containers/FridgeItems';
 import { IState } from './constants/interfaces';
 import { connect } from 'react-redux';
 import { loading, fetchFridgeItems } from './redux/actions';
-import { AddFridgeItemButton } from './containers/AddFridgeItemButton';
+import AddFridgeItemButton from './containers/AddFridgeItemButton';
 
 interface IEx {
-  loadingFlag: boolean,
+  loadingFlagGlobal: boolean,
   fetchFridgeItems: any,
   fridgeItems: any
 }
@@ -25,12 +25,12 @@ class App extends React.Component<IEx, any> {
   render() {
     return (
       <div className="app">
-        {this.props.loadingFlag ? <div className="loader">
+        {this.props.loadingFlagGlobal ? <div className="loader">
           <span></span>
           <span></span>
           <span></span>
         </div> : null}
-        <div className={this.props.loadingFlag ? 'loading' : ''}>
+        <div className={this.props.loadingFlagGlobal ? 'loading' : ''}>
           <div className="jumbotron jumbotron-fluid">
             <div className="container">
               <h1 className="display-4 ">My Fridge Status <i className="fas fa-door-open"></i></h1>
@@ -47,9 +47,9 @@ class App extends React.Component<IEx, any> {
 }
 
 const mapStateToProps = (state: IState) => {
-  const { loadingFlag, fridgeItems } = state;
+  const { loadingFlagGlobal, fridgeItems } = state;
 
-  return { loadingFlag, fridgeItems };
+  return { loadingFlagGlobal, fridgeItems };
 }
 
 const mapDispatchToProps = (dispatch: any) => ({

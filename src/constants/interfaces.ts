@@ -6,6 +6,13 @@ export interface IFridgeItem {
 }
 
 export interface IState {
-  loadingFlag: boolean,
-  fridgeItems: IFridgeItem[]
+  loadingFlagGlobal: boolean,
+  loadingFlagLocal: boolean,
+  fridgeItems: IFridgeItem[],
+  vegeItems: {}
+}
+
+export interface IVegeItem {
+  key: string,
+  value: string
 }

@@ -1,14 +1,18 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import FirebaseService from './../services/firebase.service';
+import { addVegetableItemRequest } from './../redux/actions/index';
+import { connect } from 'react-redux';
 
-export class AddFridgeItemButton extends React.Component<any, any> {
+class AddFridgeItemButton extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
       show: false
     };
     this.handleClose = this.handleClose.bind(this);
+    this.addNewVegetableItem = this.addNewVegetableItem.bind(this);
   }
 
   componentWillMount() {
@@ -19,6 +23,10 @@ export class AddFridgeItemButton extends React.Component<any, any> {
     this.setState({
       show: !this.state.show
     });
+  }
+
+  addNewVegetableItem(item?: string) {
+
   }
 
   render() {
@@ -52,7 +60,7 @@ export class AddFridgeItemButton extends React.Component<any, any> {
                   </div>
                 </div>
                 <div className="w-25 pr-0">
-                  <button type="button" className="btn btn-primary mb-2"> <i className="fas fa-plus"></i>&nbsp;Add</button>
+                  <button onClick={() => this.addNewVegetableItem()} type="button" className="btn btn-primary mb-2"> <i className="fas fa-plus"></i>&nbsp;Add</button>
                 </div>
               </div>
             </form>
@@ -69,4 +77,11 @@ export class AddFridgeItemButton extends React.Component<any, any> {
       </div>
     )
   }
+
 }
+
+const mapDispatchToProps = (dispatch: any) => ({
+  addNewVegetableItem: () => dispatch(addVegetableItemRequest())
+});
+
+export default connect(null, mapDispatchToProps)(AddFridgeItemButton);

@@ -1,5 +1,5 @@
-import { SHOW_ITEMS, LOADING_FLAG, REQUEST_FRIDGE_ITEMS, RECEIVE_FRIDGE_ITEMS } from "../../constants/action-types";
-import { IFridgeItem } from "../../constants/interfaces";
+import { SHOW_ITEMS, LOADING_FLAG, REQUEST_FRIDGE_ITEMS, RECEIVE_FRIDGE_ITEMS, ADD_VEGETABLE_ITEM_REQUEST, DONE_ADD_VEGETABLE_ITEM_REQUEST } from "../../constants/action-types";
+import { IFridgeItem, IVegeItem } from "../../constants/interfaces";
 import FirebaseService from "../../services/firebase.service";
 
 export const showItems = () => ({
@@ -20,6 +20,15 @@ export const receiveFridgeItems = (fridgeItems: IFridgeItem[]) => ({
     fridgeItems
 });
 
+export const addVegetableItemRequest = () => ({
+    type: ADD_VEGETABLE_ITEM_REQUEST
+});
+
+export const doneAddVegetableItemRequest = (vegeItem?: IVegeItem) => ({
+    type: DONE_ADD_VEGETABLE_ITEM_REQUEST,
+    vegeItem
+});
+
 export const fetchFridgeItems = () => {
     return (dispatch: any) => {
         dispatch(requestFridgeItems());
@@ -27,5 +36,18 @@ export const fetchFridgeItems = () => {
             dispatch(receiveFridgeItems(data.val()));
             console.log(data.val());
         });
+    }
+}
+
+export const addVegeItem = (vegeItem: IVegeItem) => {
+    return (dispatch: any) => {
+        dispatch(addVegetableItemRequest());
+        FirebaseService.addNewVegetableItem(vegeItem)
+            .then(() => {
+                dispatch(doneAddVegetableItemRequest(vegeItem));
+            }, () => {
+                dispatch(doneAddVegetableItemRequest());
+                alert('ERROR');
+            });
     }
 }
