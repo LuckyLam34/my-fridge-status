@@ -11,6 +11,17 @@ export class Alert {
       timer: 1000
     });
   }
+
+  static showErrorAlert(text: string, title = 'Error') {
+    return sweetAlert({
+      title,
+      text,
+      icon: "warning",
+      buttons: ['Cancel', 'OK'],
+      // dangerMode: true,
+      className: 'error-alert'
+    })
+  }
 }
 
 export class Fn {
@@ -26,5 +37,14 @@ export class Fn {
       arr.push(item);
     }
     return arr;
+  }
+
+  /**
+   * Check if checked value exits in the array
+   * @param checkedValue 
+   * @param arr 
+   */
+  static isExisted(checkedValue: any, arr: any[], checkedKeyname: string) {
+    return arr.find((item: any) => item[checkedKeyname] === checkedValue);
   }
 }

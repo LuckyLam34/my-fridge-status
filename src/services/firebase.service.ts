@@ -11,6 +11,10 @@ export default class FirebaseService {
     return FirebaseService.database.ref(FIREBASE_URLS.fridgeItems).once('value');
   }
 
+  public static addFridgeItem() {
+
+  }
+
   public static addNewVegetableItem(item: IVegeItem): Promise<any> {
     return FirebaseService.database.ref(FIREBASE_URLS.vegetables).child(item.key.toLowerCase()).set(item.value);
   }

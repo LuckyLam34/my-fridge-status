@@ -5,7 +5,7 @@ import FirebaseService from './../services/firebase.service';
 import { addVegeItem, fetchVegeItems } from './../redux/actions/index';
 import { connect } from 'react-redux';
 import { IState, IVegeItem } from "../constants/interfaces";
-import { Alert } from './../services/utils.service';
+import { Alert, Fn } from './../services/utils.service';
 import { MESSAGES } from './../constants/messages';
 
 interface ILocalState {
@@ -14,7 +14,14 @@ interface ILocalState {
   showSpinner: boolean,
   selectedVege: string
 }
-class AddFridgeItemButton extends React.Component<any, ILocalState> {
+
+interface ILocalProps {
+  vegeItems: any[],
+  addNewVegetableItem: any,
+  requestVegeItems: any
+}
+
+class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -39,10 +46,28 @@ class AddFridgeItemButton extends React.Component<any, ILocalState> {
   }
 
   addNewVegetableItem() {
+    if (!this.state.vege) return;
+
     const item: IVegeItem = {
       key: this.state.vege.replace(/ /g, ''),
       value: this.state.vege[0].toUpperCase() + this.state.vege.slice(1)
     };
+
+    if (Fn.isExisted(item.key, this.props.vegeItems, 'id')) {
+      Alert.showErrorAlert(MESSAGES.vegeExsited)
+        .then(agree => {
+          if (agree) {
+            this.setState({
+              selectedVege: item.key
+            });
+          } else {
+            this.setState({
+              vege: ''
+            })
+          }
+        });
+      return;
+    }
 
     this.setState({ showSpinner: true });
     this.props.addNewVegetableItem(item).then(() => {
@@ -102,7 +127,7 @@ class AddFridgeItemButton extends React.Component<any, ILocalState> {
           <Modal.Footer>
             <Button variant="secondary" onClick={this.handleClose}>
               Close
-          </Button>
+            </Button>
             <Button variant="primary" onClick={this.handleClose}>
               Save Changes
           </Button>
