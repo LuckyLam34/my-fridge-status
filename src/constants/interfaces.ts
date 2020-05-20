@@ -7,9 +7,8 @@ export interface IFridgeItem {
 
 export interface IState {
   loadingFlagGlobal: boolean,
-  loadingFlagLocal: boolean,
   fridgeItems: IFridgeItem[],
-  vegeItems: {}
+  vegeItems: []
 }
 
 export interface IVegeItem {

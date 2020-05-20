@@ -12,3 +12,19 @@ export class Alert {
     });
   }
 }
+
+export class Fn {
+  static convertObjToArr(obj: any) {
+    let arr = [];
+    for (let k in obj) {
+      let item;
+      if (typeof (obj[k]) === 'string') {
+        item = Object.assign({}, { name: obj[k] }, { id: k });
+      } else {
+        item = Object.assign({}, obj[k], { id: k });
+      }
+      arr.push(item);
+    }
+    return arr;
+  }
+}

@@ -1,11 +1,10 @@
-import { SHOW_ITEMS, LOADING_FLAG, REQUEST_FRIDGE_ITEMS, RECEIVE_FRIDGE_ITEMS, ADD_VEGETABLE_ITEM_REQUEST, DONE_ADD_VEGETABLE_ITEM_REQUEST } from "../../constants/action-types";
+import { SHOW_ITEMS, LOADING_FLAG, REQUEST_FRIDGE_ITEMS, RECEIVE_FRIDGE_ITEMS, ADD_VEGETABLE_ITEM_REQUEST, DONE_ADD_VEGETABLE_ITEM_REQUEST, RECEIVE_VEGE_ITEMS } from "../../constants/action-types";
 import { IState } from "../../constants/interfaces";
 
 const defaultState: IState = {
     loadingFlagGlobal: false,
-    loadingFlagLocal: false,
     fridgeItems: [],
-    vegeItems: {}
+    vegeItems: []
 }
 
 const reducers = (state = defaultState, action: any) => {
@@ -28,20 +27,18 @@ const reducers = (state = defaultState, action: any) => {
                 fridgeItems: action.fridgeItems,
                 loadingFlagGlobal: false
             }
-        case ADD_VEGETABLE_ITEM_REQUEST:
-            return {
-                ...state,
-                loadingFlagLocal: true
-            }
         case DONE_ADD_VEGETABLE_ITEM_REQUEST:
             const { vegeItem } = action;
+            console.log([...state.vegeItems, { [vegeItem['key']]: vegeItem['value'] }]);
             return {
                 ...state,
-                loadingFlagLocal: false,
-                vegeItems: {
-                    ...state.vegeItems,
-                    [vegeItem.key]: vegeItem.value
-                }
+                vegeItems: [...state.vegeItems, { name: vegeItem['value'], id: vegeItem['key'] }]
+            }
+        case RECEIVE_VEGE_ITEMS:
+            const { vegeItems } = action;
+            return {
+                ...state,
+                vegeItems
             }
         default:
             return state;

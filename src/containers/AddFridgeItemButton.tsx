@@ -2,19 +2,26 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import FirebaseService from './../services/firebase.service';
-import { addVegeItem } from './../redux/actions/index';
+import { addVegeItem, fetchVegeItems } from './../redux/actions/index';
 import { connect } from 'react-redux';
 import { IState, IVegeItem } from "../constants/interfaces";
 import { Alert } from './../services/utils.service';
 import { MESSAGES } from './../constants/messages';
 
-class AddFridgeItemButton extends React.Component<any, any> {
+interface ILocalState {
+  show: boolean,
+  vege: string,
+  showSpinner: boolean,
+  selectedVege: string
+}
+class AddFridgeItemButton extends React.Component<any, ILocalState> {
   constructor(props: any) {
     super(props);
     this.state = {
       show: false,
       vege: '',
-      showSpinner: false
+      showSpinner: false,
+      selectedVege: ''
     };
     this.handleClose = this.handleClose.bind(this);
     this.addNewVegetableItem = this.addNewVegetableItem.bind(this);
@@ -22,7 +29,7 @@ class AddFridgeItemButton extends React.Component<any, any> {
   }
 
   componentWillMount() {
-
+    this.props.requestVegeItems();
   }
 
   handleClose() {
@@ -34,12 +41,12 @@ class AddFridgeItemButton extends React.Component<any, any> {
   addNewVegetableItem() {
     const item: IVegeItem = {
       key: this.state.vege.replace(/ /g, ''),
-      value: this.state.vege
+      value: this.state.vege[0].toUpperCase() + this.state.vege.slice(1)
     };
 
     this.setState({ showSpinner: true });
     this.props.addNewVegetableItem(item).then(() => {
-      this.setState({ showSpinner: false, vege: '' });
+      this.setState({ showSpinner: false, vege: '', selectedVege: item.key });
       Alert.showSuccessAlert(MESSAGES.addNewVegeSuccess);
     }, () => {
       this.setState({ showSpinner: false });
@@ -49,6 +56,12 @@ class AddFridgeItemButton extends React.Component<any, any> {
   onChangeHandler(v: string) {
     this.setState({
       vege: v
+    });
+  }
+
+  selectionChange(val: string) {
+    this.setState({
+      selectedVege: val
     });
   }
 
@@ -69,10 +82,8 @@ class AddFridgeItemButton extends React.Component<any, any> {
             <form>
               <div className="form-group">
                 <label htmlFor="">Select vegetable</label>
-                <select className="custom-select">
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
+                <select onChange={e => this.selectionChange(e.target.value)} value={this.state.selectedVege} className="custom-select">
+                  {this.props.vegeItems.map((item: any) => <option key={item.id} value={item.id}>{item.name}</option>)}
                 </select>
               </div>
               <div className="d-flex">
@@ -106,13 +117,14 @@ class AddFridgeItemButton extends React.Component<any, any> {
 const mapDispatchToProps = (dispatch: any) => ({
   addNewVegetableItem: (item: IVegeItem) => {
     return dispatch(addVegeItem(item));
-  }
+  },
+  requestVegeItems: () => dispatch(fetchVegeItems())
 });
 
 const mapStateToProps = (state: IState) => {
-  const { loadingFlagLocal, vegeItems } = state;
+  const { vegeItems } = state;
 
-  return { loadingFlagLocal, vegeItems };
+  return { vegeItems };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddFridgeItemButton);
