@@ -20,10 +20,6 @@ export const receiveFridgeItems = (fridgeItems: IFridgeItem[]) => ({
     fridgeItems
 });
 
-export const addVegetableItemRequest = () => ({
-    type: ADD_VEGETABLE_ITEM_REQUEST
-});
-
 export const doneAddVegetableItemRequest = (vegeItem?: IVegeItem) => ({
     type: DONE_ADD_VEGETABLE_ITEM_REQUEST,
     vegeItem
@@ -52,13 +48,12 @@ export const fetchVegeItems = () => {
 
 export const addVegeItem = (vegeItem: IVegeItem) => {
     return (dispatch: any) => {
-        dispatch(addVegetableItemRequest());
-        FirebaseService.addNewVegetableItem(vegeItem)
-            .then(() => {
-                dispatch(doneAddVegetableItemRequest(vegeItem));
-            }, () => {
-                dispatch(doneAddVegetableItemRequest());
-                alert('ERROR');
-            });
+        return new Promise((resolve, reject) => {
+            return FirebaseService.addNewVegetableItem(vegeItem)
+                .then(() => {
+                    dispatch(doneAddVegetableItemRequest(vegeItem));
+                    return resolve();
+                }, () => reject());
+        });
     }
 }

@@ -1,0 +1,7 @@
+@import './colors';
+
+.success-alert {
+  & > .swal-title, & > .swal-text {
+    color: $successText;
+  }
+}

@@ -5,13 +5,16 @@ import FirebaseService from './../services/firebase.service';
 import { addVegeItem } from './../redux/actions/index';
 import { connect } from 'react-redux';
 import { IState, IVegeItem } from "../constants/interfaces";
+import { Alert } from './../services/utils.service';
+import { MESSAGES } from './../constants/messages';
 
 class AddFridgeItemButton extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
       show: false,
-      vege: ''
+      vege: '',
+      showSpinner: false
     };
     this.handleClose = this.handleClose.bind(this);
     this.addNewVegetableItem = this.addNewVegetableItem.bind(this);
@@ -34,7 +37,13 @@ class AddFridgeItemButton extends React.Component<any, any> {
       value: this.state.vege
     };
 
-    this.props.addNewVegetableItem(item);
+    this.setState({ showSpinner: true });
+    this.props.addNewVegetableItem(item).then(() => {
+      this.setState({ showSpinner: false, vege: '' });
+      Alert.showSuccessAlert(MESSAGES.addNewVegeSuccess);
+    }, () => {
+      this.setState({ showSpinner: false });
+    });
   }
 
   onChangeHandler(v: string) {
@@ -44,7 +53,6 @@ class AddFridgeItemButton extends React.Component<any, any> {
   }
 
   render() {
-    console.log(this.props.vegeItems);
     return (
       <div>
         <div className="add-fridge-item-button">
@@ -57,7 +65,7 @@ class AddFridgeItemButton extends React.Component<any, any> {
             <Modal.Title>Add New Item</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {this.props.loadingFlagLocal ? <><i className="fas fa-sync-alt"></i><div className="loading"></div></> : null}
+            {this.state.showSpinner ? <><i className="fas fa-sync-alt"></i><div className="loading"></div></> : null}
             <form>
               <div className="form-group">
                 <label htmlFor="">Select vegetable</label>
