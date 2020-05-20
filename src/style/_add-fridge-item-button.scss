@@ -1,8 +1,23 @@
 .add-fridge-item-button {
     .w-25 {
-        padding: 2em 1em;
+        padding: 2em .5em;
         button {
             width: 100%;
+        }
+    }
+
+    i.fa-sync-alt {
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+    }
+
+    .loading {
+        & + form {
+            opacity: .5;
+            background-color: #fff;
+            pointer-events: none;
         }
     }
 }

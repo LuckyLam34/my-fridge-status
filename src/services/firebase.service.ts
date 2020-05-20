@@ -14,4 +14,8 @@ export default class FirebaseService {
   public static addNewVegetableItem(item: IVegeItem): Promise<any> {
     return FirebaseService.database.ref(FIREBASE_URLS.vegetables).child(item.key.toLowerCase()).set(item.value);
   }
+
+  public static getVegeItems() {
+    return FirebaseService.database.ref(FIREBASE_URLS.vegetables).once('value');
+  }
 }

@@ -2,17 +2,20 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import FirebaseService from './../services/firebase.service';
-import { addVegetableItemRequest } from './../redux/actions/index';
+import { addVegeItem } from './../redux/actions/index';
 import { connect } from 'react-redux';
+import { IState, IVegeItem } from "../constants/interfaces";
 
 class AddFridgeItemButton extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      show: false
+      show: false,
+      vege: ''
     };
     this.handleClose = this.handleClose.bind(this);
     this.addNewVegetableItem = this.addNewVegetableItem.bind(this);
+    this.onChangeHandler = this.onChangeHandler.bind(this);
   }
 
   componentWillMount() {
@@ -25,11 +28,23 @@ class AddFridgeItemButton extends React.Component<any, any> {
     });
   }
 
-  addNewVegetableItem(item?: string) {
+  addNewVegetableItem() {
+    const item: IVegeItem = {
+      key: this.state.vege.replace(/ /g, ''),
+      value: this.state.vege
+    };
 
+    this.props.addNewVegetableItem(item);
+  }
+
+  onChangeHandler(v: string) {
+    this.setState({
+      vege: v
+    });
   }
 
   render() {
+    console.log(this.props.vegeItems);
     return (
       <div>
         <div className="add-fridge-item-button">
@@ -42,11 +57,11 @@ class AddFridgeItemButton extends React.Component<any, any> {
             <Modal.Title>Add New Item</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            {this.props.loadingFlagLocal ? <><i className="fas fa-sync-alt"></i><div className="loading"></div></> : null}
             <form>
               <div className="form-group">
                 <label htmlFor="">Select vegetable</label>
                 <select className="custom-select">
-                  {/* <option selected>Open this select menu</option> */}
                   <option value="1">One</option>
                   <option value="2">Two</option>
                   <option value="3">Three</option>
@@ -56,7 +71,7 @@ class AddFridgeItemButton extends React.Component<any, any> {
                 <div className="w-75">
                   <div className="form-group">
                     <label>Add new vegetable</label>
-                    <input type="text" className="form-control" aria-describedby="emailHelp" placeholder="" />
+                    <input onChange={e => this.onChangeHandler(e.target.value)} value={this.state.vege} type="text" className="form-control" aria-describedby="emailHelp" placeholder="" />
                   </div>
                 </div>
                 <div className="w-25 pr-0">
@@ -81,7 +96,15 @@ class AddFridgeItemButton extends React.Component<any, any> {
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
-  addNewVegetableItem: () => dispatch(addVegetableItemRequest())
+  addNewVegetableItem: (item: IVegeItem) => {
+    return dispatch(addVegeItem(item));
+  }
 });
 
-export default connect(null, mapDispatchToProps)(AddFridgeItemButton);
+const mapStateToProps = (state: IState) => {
+  const { loadingFlagLocal, vegeItems } = state;
+
+  return { loadingFlagLocal, vegeItems };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddFridgeItemButton);
