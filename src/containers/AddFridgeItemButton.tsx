@@ -37,6 +37,7 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
 
   componentWillMount() {
     this.props.requestVegeItems();
+    FirebaseService.addFridgeItem();
   }
 
   handleClose() {

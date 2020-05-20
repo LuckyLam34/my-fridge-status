@@ -12,7 +12,9 @@ export default class FirebaseService {
   }
 
   public static addFridgeItem() {
-
+    const newItemKey = FirebaseService.database.ref().child(FIREBASE_URLS.fridgeItems).push().key;
+    console.log(newItemKey);
+    FirebaseService.database.ref(FIREBASE_URLS.fridgeItems).child(newItemKey).set(newItemKey);
   }
 
   public static addNewVegetableItem(item: IVegeItem): Promise<any> {

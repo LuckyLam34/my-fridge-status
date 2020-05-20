@@ -18,7 +18,6 @@ export class Alert {
       text,
       icon: "warning",
       buttons: ['Cancel', 'OK'],
-      // dangerMode: true,
       className: 'error-alert'
     })
   }
