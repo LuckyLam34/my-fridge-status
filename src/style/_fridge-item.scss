@@ -12,6 +12,7 @@
       border-radius: $borderRadius;
       border: 1px solid $yellow;
       margin-bottom: .2em;
+      display: flex;
     }
 
     & > .record:last-child {
@@ -30,5 +31,19 @@
 
   .w-5 {
     width: 10%;
+  }
+
+  @media (max-width: 576px) {
+    .fridges-table {
+      .record {
+        display: initial;
+        &:first-child {
+          display: none;
+        }
+      }
+      .w-19, .w-5 {
+        width: 100%;
+      }
+    }
   }
 }

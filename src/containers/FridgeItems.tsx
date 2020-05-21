@@ -7,7 +7,7 @@ export const FridgeItems = ({ fridgeItems }: any) => {
   console.log(fridgeItems)
   return fridgeItems.length > 0 ? <div className="fridge-item">
     <div className="fridges-table my-3">
-      <div className="record p-3 d-flex">
+      <div className="record p-3">
         <div className="w-5">#</div>
         <div className="w-19 header">Image</div>
         <div className="w-19 header">Name</div>
