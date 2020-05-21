@@ -7,12 +7,15 @@ import { connect } from 'react-redux';
 import { IState, IVegeItem } from "../constants/interfaces";
 import { Alert, Fn } from './../services/utils.service';
 import { MESSAGES } from './../constants/messages';
-
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 interface ILocalState {
   show: boolean,
   vege: string,
   showSpinner: boolean,
-  selectedVege: string
+  selectedVege: string,
+  addedDate: any,
+  expiredDate: any
 }
 
 interface ILocalProps {
@@ -28,16 +31,20 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
       show: false,
       vege: '',
       showSpinner: false,
-      selectedVege: ''
+      selectedVege: '',
+      addedDate: new Date(),
+      expiredDate: new Date()
     };
     this.handleClose = this.handleClose.bind(this);
     this.addNewVegetableItem = this.addNewVegetableItem.bind(this);
     this.onChangeHandler = this.onChangeHandler.bind(this);
+    this.handleDateChange = this.handleDateChange.bind(this);
+    // console.log(DatePicker);
   }
 
   componentWillMount() {
     this.props.requestVegeItems();
-    FirebaseService.addFridgeItem();
+    // FirebaseService.addFridgeItem();
   }
 
   handleClose() {
@@ -59,7 +66,8 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
         .then(agree => {
           if (agree) {
             this.setState({
-              selectedVege: item.key
+              selectedVege: item.key,
+              vege: ''
             });
           } else {
             this.setState({
@@ -91,6 +99,10 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
     });
   }
 
+  handleDateChange(date: any) {
+    console.log(date);
+  };
+
   render() {
     return (
       <div>
@@ -121,6 +133,22 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
                 </div>
                 <div className="w-25 pr-0">
                   <button onClick={() => this.addNewVegetableItem()} type="button" className="btn btn-primary mb-2"> <i className="fas fa-plus"></i>&nbsp;Add</button>
+                </div>
+              </div>
+              <div className="d-flex">
+                <div className="w-50 mr-1">
+                  <label>Added Date</label>
+                  <DatePicker
+                    selected={this.state.addedDate}
+                    onChange={this.handleDateChange}
+                  />
+                </div>
+                <div className="w-50 ml-1">
+                  <label>Expired Date</label>
+                  <DatePicker
+                    selected={this.state.expiredDate}
+                    onChange={this.handleDateChange}
+                  />
                 </div>
               </div>
             </form>

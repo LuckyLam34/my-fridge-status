@@ -16,8 +16,6 @@ class App extends React.Component<IEx, any> {
 
   constructor(props: any) {
     super(props);
-    console.log(document);
-    console.log(window);
   }
 
   componentDidMount() {

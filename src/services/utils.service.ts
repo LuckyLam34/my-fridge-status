@@ -16,7 +16,6 @@ export class Alert {
     return sweetAlert({
       title,
       text,
-      icon: "warning",
       buttons: ['Cancel', 'OK'],
       className: 'error-alert'
     })

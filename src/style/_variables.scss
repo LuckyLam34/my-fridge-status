@@ -1,3 +1,6 @@
+/**
+Colors
+*/
 $red: #a7414a;
 $black: #282726;
 $green: #6a8a82;
@@ -16,5 +19,11 @@ $theme-colors: (
   'primary': $yellow,
   'danger': $danger
 );
+
+/**
+Others
+*/
+$borderRadius: 0.25rem;
+$borderColor: #ced4da;
 
 @import 'node_modules/bootstrap/scss/bootstrap';

@@ -40,6 +40,10 @@ export const fetchFridgeItems = () => {
     }
 }
 
+export const addFridgeItem = () => {
+
+}
+
 export const fetchVegeItems = () => {
     return (dispatch: any) => {
         FirebaseService.getVegeItems().then((data: any) => {
