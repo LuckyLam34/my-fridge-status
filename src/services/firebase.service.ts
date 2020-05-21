@@ -1,6 +1,7 @@
 
 import { FIREBASE_URLS } from './../constants/firebase-urls';
 import { IVegeItem } from '../constants/interfaces';
+import { IFridgeItem } from './../constants/interfaces';
 
 export default class FirebaseService {
   public static database: any;
@@ -11,10 +12,10 @@ export default class FirebaseService {
     return FirebaseService.database.ref(FIREBASE_URLS.fridgeItems).once('value');
   }
 
-  public static addFridgeItem(data: any) {
+  public static addFridgeItem(data: IFridgeItem) {
     const newItemKey = FirebaseService.database.ref().child(FIREBASE_URLS.fridgeItems).push().key;
 
-    return FirebaseService.database.ref(FIREBASE_URLS.fridgeItems).child(newItemKey).set({ [newItemKey]: data });
+    return FirebaseService.database.ref(FIREBASE_URLS.fridgeItems).child(newItemKey).set(data);
   }
 
   public static addNewVegetableItem(item: IVegeItem): Promise<any> {

@@ -1,8 +1,7 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import FirebaseService from './../services/firebase.service';
-import { addVegeItem, fetchVegeItems, addFridgeItem } from './../redux/actions/index';
+import { addVegeItem, fetchVegeItems, addFridgeItem, requestFridgeItems, fetchFridgeItems } from './../redux/actions/index';
 import { connect } from 'react-redux';
 import { IState, IVegeItem } from "../constants/interfaces";
 import { Alert, Fn } from './../services/utils.service';
@@ -14,7 +13,7 @@ interface ILocalState {
   show: boolean,
   vege: string,
   showSpinner: boolean,
-  selectedVege: string,
+  selectedVege: any,
   dateAdded: any,
   dateExpired: any
 }
@@ -23,7 +22,8 @@ interface ILocalProps {
   vegeItems: any[],
   addNewVegetableItem: any,
   requestVegeItems: any,
-  addFridgeItem: any
+  addFridgeItem: any,
+  requestFridgeItems: any
 }
 
 class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
@@ -45,7 +45,8 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
   }
 
   componentWillMount() {
-    this.props.requestVegeItems();
+    this.props.requestVegeItems()
+      .then(() => this.setState({ selectedVege: this.props.vegeItems[0] }));
   }
 
   handleClose() {
@@ -67,7 +68,7 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
         .then(agree => {
           if (agree) {
             this.setState({
-              selectedVege: item.key,
+              selectedVege: item,
               vege: ''
             });
           } else {
@@ -81,7 +82,7 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
 
     this.setState({ showSpinner: true });
     this.props.addNewVegetableItem(item).then(() => {
-      this.setState({ showSpinner: false, vege: '', selectedVege: item.key });
+      this.setState({ showSpinner: false, vege: '', selectedVege: item });
       Alert.showSuccessAlert(MESSAGES.addNewVegeSuccess);
     }, () => {
       this.setState({ showSpinner: false });
@@ -95,18 +96,46 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
   }
 
   selectionChange(val: string) {
+    try {
+      val = JSON.parse(val);
+    } catch (e) { }
     this.setState({
       selectedVege: val
     });
   }
 
-  handleDateChange(date: any) {
-    console.log(date);
+  /**
+   * 
+   * @param date 
+   * @param type dateAdded | dateExpired
+   */
+  handleDateChange(date: any, type: string) {
+    if (type === 'dateAdded') {
+      this.setState({
+        dateAdded: date
+      });
+    } else {
+      this.setState({
+        dateExpired: date
+      });
+    }
   };
 
   addFridgeItem() {
-    let { dateAdded, dateExpired, selectedVege } = this.state;
-    console.log({ dateAdded, dateExpired, selectedVege })
+    const { dateAdded, dateExpired, selectedVege } = this.state;
+    const fridgeItem: IFridgeItem = {
+      dateAdded: Fn.convertDateTimeToString(dateAdded),
+      dateExpired: Fn.convertDateTimeToString(dateExpired),
+      vegetableName: selectedVege.name,
+      vegetableId: selectedVege.id
+    };
+
+    this.setState({ showSpinner: true });
+    this.props.addFridgeItem(fridgeItem)
+      .then(() => {
+        this.setState({ showSpinner: false, show: !this.state.show });
+        this.props.requestFridgeItems();
+      }, () => this.setState({ showSpinner: false }));
   }
 
   render() {
@@ -119,7 +148,7 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
         </div>
         <Modal className="add-fridge-item-button" centered={true} show={this.state.show} onHide={this.handleClose} backdrop="static">
           <Modal.Header closeButton>
-            <Modal.Title>Add New Item</Modal.Title>
+            <Modal.Title>Add Fridge Item</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {this.state.showSpinner ? <><i className="fas fa-sync-alt"></i><div className="loading"></div></> : null}
@@ -129,21 +158,21 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
                   <label>Added Date</label>
                   <DatePicker
                     selected={this.state.dateAdded}
-                    onChange={this.handleDateChange}
+                    onChange={(e) => this.handleDateChange(e, 'dateAdded')}
                   />
                 </div>
                 <div className="w-50 ml-1">
                   <label>Expired Date</label>
                   <DatePicker
                     selected={this.state.dateExpired}
-                    onChange={this.handleDateChange}
+                    onChange={(e) => this.handleDateChange(e, 'dateExpired')}
                   />
                 </div>
               </div>
               <div className="form-group mt-3">
                 <label htmlFor="">Select vegetable</label>
-                <select onChange={e => this.selectionChange(e.target.value)} value={this.state.selectedVege} className="custom-select">
-                  {this.props.vegeItems.map((item: any) => <option key={item.id} value={item.id}>{item.name}</option>)}
+                <select onChange={e => this.selectionChange(e.target.value)} value={JSON.stringify(this.state.selectedVege)} className="custom-select">
+                  {this.props.vegeItems.map((item: any) => <option key={item.id} value={JSON.stringify(item)}>{item.name}</option>)}
                 </select>
               </div>
               <div className="d-flex">
@@ -181,7 +210,8 @@ const mapDispatchToProps = (dispatch: any) => ({
     return dispatch(addVegeItem(item));
   },
   requestVegeItems: () => dispatch(fetchVegeItems()),
-  addFridgeItem: (item: IFridgeItem) => dispatch(addFridgeItem(item))
+  addFridgeItem: (item: IFridgeItem) => dispatch(addFridgeItem(item)),
+  requestFridgeItems: () => dispatch(fetchFridgeItems())
 });
 
 const mapStateToProps = (state: IState) => {

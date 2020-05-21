@@ -1,4 +1,5 @@
 import sweetAlert from 'sweetalert';
+import moment from 'moment';
 
 export class Alert {
   static showSuccessAlert(text: string, title = 'Success') {
@@ -44,5 +45,17 @@ export class Fn {
    */
   static isExisted(checkedValue: any, arr: any[], checkedKeyname: string) {
     return arr.find((item: any) => item[checkedKeyname] === checkedValue);
+  }
+
+  /**
+     * 
+     * @param dateTime MMDDYYYY
+     */
+  public static getDateTime(dateTime: string) {
+    return moment(dateTime, 'MMDDYYYY').format('MMM D YYYY');
+  }
+
+  public static convertDateTimeToString(dateTimeObj: any) {
+    return moment(dateTimeObj).format('MMDDYYYY');
   }
 }

@@ -48,7 +48,6 @@ export const addFridgeItem = (fridgeItem: IFridgeItem) => {
         return new Promise((resolve, reject) => {
             return FirebaseService.addFridgeItem({ dateAdded, dateExpired, vegetableName, vegetableId })
                 .then(() => {
-                    dispatch(requestFridgeItems());
                     return resolve()
                 }, () => reject());
         })
@@ -57,8 +56,11 @@ export const addFridgeItem = (fridgeItem: IFridgeItem) => {
 
 export const fetchVegeItems = () => {
     return (dispatch: any) => {
-        FirebaseService.getVegeItems().then((data: any) => {
-            dispatch(receiveVegeItems(data.val()));
+        return new Promise((resolve, reject) => {
+            return FirebaseService.getVegeItems().then((data: any) => {
+                dispatch(receiveVegeItems(data.val()));
+                return resolve();
+            }, () => reject());
         });
     }
 }
