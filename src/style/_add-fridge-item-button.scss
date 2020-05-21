@@ -1,8 +1,9 @@
 .add-fridge-item-button {
     .w-25 {
-        padding: 2em .5em;
+        padding: 0em .5em;
         button {
             width: 100%;
+            margin-top: 2em;
         }
     }
 
@@ -31,5 +32,9 @@
                 padding: 0.375rem 0.75rem;
             }
         }
+    }
+
+    .modal-body {
+        padding-bottom: 0;
     }
 }

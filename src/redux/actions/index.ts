@@ -35,13 +35,24 @@ export const fetchFridgeItems = () => {
     return (dispatch: any) => {
         dispatch(requestFridgeItems());
         FirebaseService.getFridgeItems().then((data: any) => {
+            console.log(data.val());
             dispatch(receiveFridgeItems(data.val()));
         });
     }
 }
 
-export const addFridgeItem = () => {
+export const addFridgeItem = (fridgeItem: IFridgeItem) => {
+    const { dateAdded, dateExpired, vegetableName, vegetableId } = fridgeItem;
 
+    return (dispatch: any) => {
+        return new Promise((resolve, reject) => {
+            return FirebaseService.addFridgeItem({ dateAdded, dateExpired, vegetableName, vegetableId })
+                .then(() => {
+                    dispatch(requestFridgeItems());
+                    return resolve()
+                }, () => reject());
+        })
+    }
 }
 
 export const fetchVegeItems = () => {

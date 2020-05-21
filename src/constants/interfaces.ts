@@ -1,8 +1,9 @@
 export interface IFridgeItem {
-  id: string
+  id?: string
   dateAdded: string,
   dateExpired: string,
-  name: string,
+  vegetableName: string,
+  vegetableId: string
 }
 
 export interface IState {
