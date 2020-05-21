@@ -5,14 +5,30 @@
     width: 50px;
   }
 
-  table {
-    background: $yellow;
-    color: $whiteText;
-    border-radius: 7px;
-
-    td, th {
-      vertical-align: middle;
-      text-align: left;
+  .fridges-table {
+    .record {
+      background-color: $yellow;
+      color: $whiteText;
+      border-radius: $borderRadius;
+      border: 1px solid $yellow;
+      margin-bottom: .2em;
     }
+
+    & > .record:last-child {
+      margin-bottom: 0;
+    }
+
+    .header {
+      font-weight: bold;
+    }
+    
+  }
+
+  .w-19 {
+    width: 18%;
+  }
+
+  .w-5 {
+    width: 10%;
   }
 }

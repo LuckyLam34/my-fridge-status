@@ -52,7 +52,7 @@ export class Fn {
      * @param dateTime MMDDYYYY
      */
   public static getDateTime(dateTime: string) {
-    return moment(dateTime, 'MMDDYYYY').format('MMM D YYYY');
+    return moment(dateTime, 'MMDDYYYY').format('MMM D YY');
   }
 
   public static convertDateTimeToString(dateTimeObj: any) {
