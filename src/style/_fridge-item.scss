@@ -22,7 +22,6 @@
     .header {
       font-weight: bold;
     }
-    
   }
 
   .w-19 {
@@ -33,17 +32,40 @@
     width: 10%;
   }
 
-  @media (max-width: 576px) {
+  .w-19, .w-5 {
+    & > span {
+      display: none;
+    }
+  }
+
+  @media (max-width: 576px) { 
     .fridges-table {
       .record {
-        display: initial;
+        border: none;
+        display: block;
         &:first-child {
           display: none;
+        }
+        & > div {
+          margin: .5em 0;
+        }
+        & > div:last-child {
+          margin-bottom: 0;
+        }
+        & > div:first-child {
+          margin-top: 0;
         }
       }
       .w-19, .w-5 {
         width: 100%;
+        display: inline-flex;
+        & > span {
+          display: block;
+        }
+        & > span,div {
+          width: 50%
+        }
       }
-    }
+    }  
   }
 }

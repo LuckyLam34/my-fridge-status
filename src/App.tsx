@@ -31,9 +31,9 @@ class App extends React.Component<IEx, any> {
           <span></span>
         </div> : null}
         <div className={this.props.loadingFlagGlobal ? 'loading' : ''}>
-          <div className="jumbotron jumbotron-fluid">
+          <div className="jumbotron jumbotron-fluid mb-3 mb-sm-5">
             <div className="container">
-              <h1 className="display-4 ">My Fridge Status <i className="fas fa-door-open"></i></h1>
+              <h1 className="display-4 "><i className="fas fa-door-open"></i> My Fridge Status </h1>
             </div>
           </div>
           <div className="container">
