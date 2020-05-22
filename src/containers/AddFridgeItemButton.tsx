@@ -141,7 +141,7 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
   render() {
     return (
       <div>
-        <div className="add-fridge-item-button">
+        <div className="add-fridge-item-button mb-3">
           <button onClick={this.handleClose} type="button" className="btn btn-primary">
             <i className="fas fa-plus"></i>&nbsp;
             Add Item</button>
