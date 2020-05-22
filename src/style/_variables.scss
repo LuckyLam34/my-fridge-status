@@ -26,4 +26,9 @@ Others
 $borderRadius: 0.25rem;
 $borderColor: #ced4da;
 
+/**
+Break points
+*/
+$mobile: 576px;
+
 @import 'node_modules/bootstrap/scss/bootstrap';

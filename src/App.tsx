@@ -5,6 +5,8 @@ import { IState } from './constants/interfaces';
 import { connect } from 'react-redux';
 import { loading, fetchFridgeItems } from './redux/actions';
 import AddFridgeItemButton from './containers/AddFridgeItemButton';
+import moment from 'moment';
+import { Fn } from './services/utils.service';
 
 interface IEx {
   loadingFlagGlobal: boolean,
@@ -47,8 +49,8 @@ class App extends React.Component<IEx, any> {
 }
 
 const mapStateToProps = (state: IState) => {
-  const { loadingFlagGlobal, fridgeItems } = state;
-
+  let { loadingFlagGlobal, fridgeItems } = state;
+  fridgeItems = fridgeItems.sort(item => Fn.calDaysLeft(item.dateExpired) - 3);
   return { loadingFlagGlobal, fridgeItems };
 }
 

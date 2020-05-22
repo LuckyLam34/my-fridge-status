@@ -58,4 +58,11 @@ export class Fn {
   public static convertDateTimeToString(dateTimeObj: any) {
     return moment(dateTimeObj).format('MMDDYYYY');
   }
+
+  public static calDaysLeft(expiredDate: any) {
+    const current = moment();
+    const expiredDateObj = moment(expiredDate, 'MMDDYYYY');
+
+    return expiredDateObj.diff(current, 'days');
+  };
 }

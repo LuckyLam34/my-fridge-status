@@ -1,7 +1,7 @@
 import React from 'react';
 import { Fn } from '../services/utils.service';
 
-export const FridgeItem = ({ fridgeItem, no }: any) => {
+export const FridgeItem = ({ fridgeItem, no, daysLeft }: any) => {
   return <div className="record p-3">
     <div className="w-5"><span className="font-weight-bold">#</span> {no}</div>
     <div className="w-19">
@@ -22,7 +22,7 @@ export const FridgeItem = ({ fridgeItem, no }: any) => {
     </div>
     <div className="w-19">
       <span className="font-weight-bold">Expire in</span>
-      <div>5 days</div>
+      <div className={daysLeft <= 3 ? 'expired' : ''}>{daysLeft} days</div>
     </div>
   </div>
 }
