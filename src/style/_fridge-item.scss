@@ -46,6 +46,15 @@
         &:first-child {
           display: none;
         }
+        & > div {
+          margin: .5em 0;
+        }
+        & > div:last-child {
+          margin-bottom: 0;
+        }
+        & > div:first-child {
+          margin-top: 0;
+        }
       }
       .w-19, .w-5 {
         width: 100%;

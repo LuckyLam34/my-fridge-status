@@ -26,4 +26,10 @@
     .add-fridge-item-button {
         float: right;
     }
+
+    @media (max-width: 501px) {
+        .jumbotron h1 {
+            font-size: 2rem;
+        }
+    }
 }
