@@ -153,20 +153,28 @@ class AddFridgeItemButton extends React.Component<ILocalProps, ILocalState> {
           <Modal.Body>
             {this.state.showSpinner ? <><i className="fas fa-sync-alt"></i><div className="loading"></div></> : null}
             <form>
-              <div className="d-flex">
-                <div className="w-50 mr-1">
-                  <label>Added Date</label>
-                  <DatePicker
-                    selected={this.state.dateAdded}
-                    onChange={(e) => this.handleDateChange(e, 'dateAdded')}
-                  />
+              <div className="row">
+                <div className="col-md-6 col-sm-12">
+                  <div className="d-flex">
+                    <div className="w-100 mb-0 mb-sm-3">
+                      <label>Added Date</label>
+                      <DatePicker
+                        selected={this.state.dateAdded}
+                        onChange={(e) => this.handleDateChange(e, 'dateAdded')}
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div className="w-50 ml-1">
-                  <label>Expired Date</label>
-                  <DatePicker
-                    selected={this.state.dateExpired}
-                    onChange={(e) => this.handleDateChange(e, 'dateExpired')}
-                  />
+                <div className="col-md-6 col-sm-12">
+                  <div className="d-flex">
+                    <div className="w-100">
+                      <label>Expired Date</label>
+                      <DatePicker
+                        selected={this.state.dateExpired}
+                        onChange={(e) => this.handleDateChange(e, 'dateExpired')}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="form-group mt-3">

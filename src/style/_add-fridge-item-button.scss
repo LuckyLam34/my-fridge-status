@@ -22,7 +22,7 @@
         }
     }
 
-    .w-50 {
+    .w-100 {
         & > .react-datepicker-wrapper {
             width: 100%;
             input {
@@ -46,6 +46,9 @@
         }
         .modal-dialog {
             margin: 0;
+        }
+        .row > .col-sm-12:first-child {
+            margin-bottom: 1rem;
         }
     }
 }

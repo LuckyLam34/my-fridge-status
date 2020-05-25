@@ -6,7 +6,7 @@ export const FridgeItem = ({ fridgeItem, no, daysLeft }: any) => {
     <div className="w-5"><span className="font-weight-bold">#</span> {no}</div>
     <div className="w-19">
       <span className="font-weight-bold">Picture</span>
-      <div><img className="rounded" src='/assets/images/cabbage.jpg' /></div>
+      <div><img className="rounded" src={'/assets/images/' + fridgeItem.vegetableId + '.jpg'} /></div>
     </div>
     <div className="w-19 text-capitalize">
       <span className="font-weight-bold">Name</span>

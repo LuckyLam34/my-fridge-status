@@ -50,7 +50,9 @@ class App extends React.Component<IEx, any> {
 
 const mapStateToProps = (state: IState) => {
   let { loadingFlagGlobal, fridgeItems } = state;
-  fridgeItems = fridgeItems.sort(item => Fn.calDaysLeft(item.dateExpired) - 3);
+  fridgeItems = fridgeItems.sort((item1, item2) => {
+    return Fn.calDaysLeft(item1.dateExpired) - Fn.calDaysLeft(item2.dateExpired);
+  });
   return { loadingFlagGlobal, fridgeItems };
 }
 
