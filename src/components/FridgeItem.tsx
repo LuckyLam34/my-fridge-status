@@ -1,5 +1,6 @@
 import React from 'react';
 import { Fn } from '../services/utils.service';
+import { COMMON } from '../constants/common';
 
 export const FridgeItem = ({ fridgeItem, no, daysLeft }: any) => {
   return <div className="record p-3">
@@ -22,7 +23,7 @@ export const FridgeItem = ({ fridgeItem, no, daysLeft }: any) => {
     </div>
     <div className="w-19">
       <span className="font-weight-bold">Expire in</span>
-      <div className={daysLeft <= 3 ? 'expired' : ''}>{daysLeft} days</div>
+      <div className={daysLeft <= COMMON.warningExpiredDays ? 'expired' : ''}>{daysLeft <= 0 ? 'Expired' : daysLeft + ' days'} </div>
     </div>
   </div>
 }
