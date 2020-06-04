@@ -9,11 +9,11 @@ export const FridgeItems = ({ fridgeItems }: any) => {
     <div className="fridges-table my-3">
       <div className="record p-3">
         <div className="w-5">#</div>
-        <div className="w-19 header">Picture</div>
-        <div className="w-19 header">Name</div>
-        <div className="w-19 header">Added Date</div>
-        <div className="w-19 header">Expired Date</div>
-        <div className="w-19 header">Expire in</div>
+        <div className="w-18 header">Picture</div>
+        <div className="w-18 header">Name</div>
+        <div className="w-18 header">Added Date</div>
+        <div className="w-18 header">Expired Date</div>
+        <div className="w-18 header">Expire in</div>
       </div>
       {
         fridgeItems.map((item: any, idx: number) => <FridgeItem key={idx} no={idx + 1} daysLeft={Fn.calDaysLeft(item.dateExpired)} fridgeItem={item}></FridgeItem>)
