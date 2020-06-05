@@ -1,15 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@fortawesome/fontawesome-free/css/all.css';
-import './style/style.scss';
-import * as firebase from 'firebase';
-import { firebaseConfig } from './env/firebase-config';
-import FirebaseService from './services/firebase.service';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
+import "@fortawesome/fontawesome-free/css/all.css";
+import "./style/style.scss";
+import * as firebase from "firebase";
+import { firebaseConfig } from "./env/firebase-config";
+import FirebaseService from "./services/firebase.service";
 
 firebase.initializeApp(firebaseConfig);
 FirebaseService.database = firebase.database();
@@ -18,7 +17,7 @@ ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
