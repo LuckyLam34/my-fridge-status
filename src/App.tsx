@@ -3,7 +3,7 @@ import FirebaseService from './services/firebase.service';
 import { FridgeItems } from './containers/FridgeItems';
 import { IState } from './constants/interfaces';
 import { connect } from 'react-redux';
-import { loading, fetchFridgeItems } from './redux/actions';
+import { loading, fetchFridgeItems, removeFridgeItem } from './redux/actions';
 import AddFridgeItemButton from './containers/AddFridgeItemButton';
 import moment from 'moment';
 import { Fn } from './services/utils.service';
@@ -58,7 +58,8 @@ const mapStateToProps = (state: IState) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
   setLoading: () => dispatch(loading(false)),
-  fetchFridgeItems: () => dispatch(fetchFridgeItems())
+  fetchFridgeItems: () => dispatch(fetchFridgeItems()),
+  removeFridgeItem: (id: string) => dispatch(removeFridgeItem(id))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

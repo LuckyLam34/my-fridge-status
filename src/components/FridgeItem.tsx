@@ -1,7 +1,9 @@
 import React from 'react';
 import { Fn } from '../services/utils.service';
+import { connect } from 'react-redux';
+import { removeFridgeItem } from '../redux/actions';
 
-export const FridgeItem = ({ fridgeItem, no, daysLeft }: any) => {
+export const FridgeItem = ({ fridgeItem, no, daysLeft, removeFridgeItem }: any) => {
   return <div className="record p-3 align-items-center">
     <div className="w-5"><span className="font-weight-bold">#</span> {no}</div>
     <div className="w-18">
@@ -21,12 +23,12 @@ export const FridgeItem = ({ fridgeItem, no, daysLeft }: any) => {
       <div>{Fn.getDateTime(fridgeItem.dateExpired)}</div>
     </div>
     <div className="w-18">
-      <span className="font-weight-bold">Expire in</span>
+      <span className="font-weight-bold">Expired in</span>
       <div className={daysLeft <= 3 ? 'expired' : ''}>{daysLeft} days</div>
     </div>
     <div className="w-5">
       <span></span>
-      <button type="button" className="btn btn-outline-danger btn-block"><i className="far fa-trash-alt"></i></button>
+      <button type="button" onClick={() => removeFridgeItem(fridgeItem.id)} className="btn btn-outline-danger btn-block"><i className="far fa-trash-alt"></i></button>
     </div>
   </div>
 }
