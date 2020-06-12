@@ -30,6 +30,13 @@
     @media (max-width: 501px) {
         .jumbotron h1 {
             font-size: 2rem;
+            margin-top: .5em;
+        }
+    }
+
+    @media (max-width: $mobile) {
+        .jumbotron {
+            min-height: 139px;
         }
     }
 }

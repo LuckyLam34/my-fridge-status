@@ -18,6 +18,10 @@ export default class FirebaseService {
     return FirebaseService.database.ref(FIREBASE_URLS.fridgeItems).child(newItemKey).set(data);
   }
 
+  public static removeFridgeItem(id: string) {
+    return FirebaseService.database.ref(FIREBASE_URLS.fridgeItems).child(id).set(null);
+  }
+
   public static addNewVegetableItem(item: IVegeItem): Promise<any> {
     return FirebaseService.database.ref(FIREBASE_URLS.vegetables).child(item.key.toLowerCase()).set(item.value);
   }

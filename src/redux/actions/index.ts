@@ -54,6 +54,20 @@ export const addFridgeItem = (fridgeItem: IFridgeItem) => {
     }
 }
 
+export const removeFridgeItem = (id: string) => {
+    return (dispatch: any) => {
+        dispatch(loading(true));
+        return new Promise((resolve, reject) => {
+            return FirebaseService.removeFridgeItem(id)
+                .then(() => {
+                    dispatch(loading(false));
+                    dispatch(fetchFridgeItems());
+                    return resolve();
+                }, () => reject());
+        });
+    }
+}
+
 export const fetchVegeItems = () => {
     return (dispatch: any) => {
         return new Promise((resolve, reject) => {
